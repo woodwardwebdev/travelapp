@@ -1,0 +1,74 @@
+<%include ../partials/header%>
+
+<div class="container">
+    <h1 class="display-4">Mileage Tracker</h1>
+    <p class="lead">Choose an option:</p>
+
+    <!-- buttons to show/hide mileage related divs -->
+
+    <div class="mileage-buttons">
+        <a href = '/mileage/mileageLog'><button class = 'btn btn-lg btn-primary' id = 'mileage-log-button'>Mileage Log</button></a>
+        <button class = 'btn btn-lg btn-primary' id = 'enter-mileage-button'>Enter Mileage</button>
+        <button class = 'btn btn-lg btn-primary' id = 'create-location-button'>Create Location</button>
+       <a href='/locations'> <button class = 'btn btn-lg btn-primary'>View a list of locations</button> </a>
+    </div>
+    
+    <!-- Enter Mileage Div -->
+    <div id="enter-mileage-div" class = 'hidden option-div'>
+
+        <form action = '/mileage' method="POST">
+        <div class = 'form-group'>
+            <label for='locationselect'>Select Location</label>
+            <select name="locationselect" id="locationselect">
+                <%locations.forEach(function(location){ %>
+                    <option> <%=location.name%> </option>
+                <% }) %>
+            </select>
+        </div>
+        <div class = 'form-group'>
+            <label for='destinationselect'>Select Destination</label>
+             <select name="destinationselect" id="destinationselect">
+                <%locations.forEach(function(location){ %>
+                    <option> <%=location.name%> </option>
+                <% }) %>
+            </select>
+        </div>
+        <div class = 'form-group'>
+        <label for = 'returncheckbox'>Return Journey?</label>
+            <input type = 'checkbox' name = 'returncheckbox' id = 'returncheckbox' value = 'true'></input>
+        </div>
+
+        <div class="form-group">
+            <label for="mileagedate">Date</label>
+            <input type="date" id = 'mileagedate' name = 'mileagedate' value = <%=new Date().toISOString().slice(0, 10)%>>
+        </div>   
+
+        <button type = 'submit' class = 'btn btn-lg btn-success'>Submit</button>
+
+        </form>
+
+    </div>
+
+    <!-- create location div -->
+    <div id="create-location-div" class = "hidden option-div">
+        <form action="/locations" method ="POST">
+            <div class="form-group">
+                <label for="locationName">Location Name</label>
+                <input type="text" name="locationName" required>
+            </div>
+            <div class="form-group">
+                <label for="locationPostcode">Location Postcode</label>
+                <input type="text" name="locationPostcode" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class ='btn btn-lg btn-success'>Submit</button>
+            </div>
+            
+        </form>
+    </div>
+
+
+
+</div>
+
+<%include ../partials/footer%>

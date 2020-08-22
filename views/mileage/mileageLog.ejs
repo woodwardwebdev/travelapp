@@ -1,0 +1,35 @@
+<%include ../partials/header%>
+
+<div id="mileage-log-div">
+        <h5 class = 'display-4 text-center m-3'>Journey Mileage Log</h5>
+        <table class = 'table'>
+            <th>Date</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Type</th>
+            <th>Mileage</th>
+            <th></th>
+
+        <% journies.forEach(function(journey){ %>
+        <%console.log(journey.returncheckbox)%>
+            <tr>
+                <td> <%= journey.date.toDateString() %> </td>
+                <td> <%= journey.startpoint %> </td>
+                <td> <%= journey.destination %> </td>
+                <td> <% if (journey.returncheckbox == true){ %>
+                    return
+                    <%  } else { %>
+                    single
+                 <%   } %>
+                    </td>
+                <td> <%=journey.mileage%> </td>
+                <td> <form action ="/journeys/<%=journey._id%>?_method=DELETE" method = "POST">
+                        <button class = 'btn btn-danger'>Delete</button>    
+                    </form> </td>    
+        </tr>
+        <% }) %>
+
+        </table>
+    </div>
+
+<%include ../partials/footer%>

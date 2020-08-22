@@ -1,0 +1,25 @@
+<%include ../partials/header%>
+
+<h2 class="display-4">List of Stored Locations</h2>
+
+<table class = 'table'>
+    <tr>
+        <th>Location Name</th>
+        <th>Location Postcode</th>
+    </tr>
+
+    <%locations.forEach(function(location){ %>
+        <tr>
+            <td> <%= location.name %> </td>
+            <td> <%= location.postcode %> </td>
+           <td> <form action ="/locations/<%=location._id%>?_method=DELETE" method = "POST">
+                <button class = 'btn btn-danger'>Delete</button>    
+            </form> </td> 
+        </tr>
+    <% }) %>
+    
+</table>
+
+
+
+<%include ../partials/footer%>
