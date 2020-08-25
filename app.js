@@ -1,10 +1,11 @@
+require("dotenv").config();
 let express = require("express");
 let app = express();
 let bodyParser = require("body-parser");
 let request = require("request");
 let mongoose = require("mongoose");
 let Journey = require("./models/journey");
-let mapsAPI = process.env.MAPSAPI;
+let mapsAPI = process.env.MAPS_API;
 let Location = require("./models/location");
 let flash = require("connect-flash");
 let methodOverride = require("method-override");
@@ -105,20 +106,21 @@ app.post("/mileage", function(req, res) {
           }
           request(
             "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-              location +
+              location.postcode +
               "&destination=" +
-              destination +
+              destination.postcode +
               "&key=" +
               mapsAPI,
             function(err, response, body) {
               console.log(
                 "https://maps.googleapis.com/maps/api/directions/json?origin=" +
-                  location +
+                  location.postcode +
                   "&destination=" +
-                  destination +
+                  destination.postcode +
                   "&key=" +
                   mapsAPI
               );
+              console.log(body);
               const parsedData = JSON.parse(body);
               let kms = parsedData.routes[0].legs[0].distance.text;
               kmsnum = parseInt(kms);
@@ -224,8 +226,6 @@ app.delete("/locations/:id", function(req, res) {
     }
   });
 });
-
-console.log(process.env);
 
 app.listen(3000, function() {
   console.log("Woodward Audio Server Is Up!");
